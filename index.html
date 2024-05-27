@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="hr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+
+        <title>Europsi izbori 2024</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <!--
+            Original 'style.css'
+            first passed through the prefixer: https://autoprefixer.github.io/
+            and after that through the minifier: https://www.cleancss.com/css-minify/
+        -->
+        <link rel="stylesheet" href="./static/style.min.css?bust=20240527">
+    </head>
+    <body class="cro_elections">
+        <div class="info_wrapper scrollable_wrapper">
+            <div class="general_info">
+                <h1>
+                    <span class="year">2024.</span>
+                    <span class="text">
+                        <span>EUROPSKI</span>
+                        <span>IZBORI</span>
+                    </span>
+                </h1>
+                <img class="eu_flag" src="./static/eu_flag.png" alt="EU flag" width="58" height="58">
+                <div id="processed_votes_and_last_change"></div>
+                <p class="desk api">PODATKE OSIGURAVA: APIS IT D.O.O.</p>
+            </div>
+            <div class="details scrollable_wrapper">
+                <div id="election_results"></div>
+            </div>
+        </div>
+        <div class="live_blob">
+            <div class="live">
+                <div class="blob"></div>
+                <div>REZULTATI UŽIVO</div>
+            </div>
+        </div>
+        <div class="loader_wrapper">
+            <span class="loader"></span>
+        </div>
+        <p class="mobile api">PODATKE OSIGURAVA: APIS IT D.O.O.</p>
+
+        <!--
+            Original 'main.js'
+            passed through the minifier: https://www.digitalocean.com/community/tools/minify
+            with default options included.
+        -->
+        <script src="./static/main.min.js?bust=20240527"></script>
+    </body>
+
+    <template id="processed_votes_and_last_change_template">
+        <p id="processed_votes"> OBRAĐENIH BM</p>
+        <p id="last_change">POSLJEDNJA IZMJENA: </p>
+    </template>
+</html>
