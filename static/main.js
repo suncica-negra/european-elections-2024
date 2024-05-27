@@ -173,7 +173,7 @@ function placeDataInHtml(responseData) {
     if (loaderWrapper) loaderWrapper.style.display = 'none';
 }
 
-function setProcessedVotesAndLastChange(status, refresh = true) {
+function setProcessedVotesAndLastChange(vrijeme, bmObradjenoPosto, refresh = true) {
     const destination = document.getElementById('processed_votes_and_last_change');
 
     if (!destination) return;
@@ -184,10 +184,10 @@ function setProcessedVotesAndLastChange(status, refresh = true) {
     const cloneInfo = tempInfo.content.cloneNode(true);
     const processedVotes = cloneInfo.getElementById('processed_votes');
 
-    processedVotes.textContent = (`${status?.bmPosto}%`) + processedVotes.textContent;
+    processedVotes.textContent = (`${bmObradjenoPosto}%`) + processedVotes.textContent;
 
     const lastChange = cloneInfo.getElementById('last_change');
-    const lastUpdated = (status?.vrijeme)?.split(':');
+    const lastUpdated = vrijeme?.split(':');
     const paddedTime = lastUpdated?.map(i => i.padStart(2, '0'));
     lastChange.textContent += `${paddedTime?.join(':')} H`;
 
@@ -211,7 +211,7 @@ async function getElectionsData(refresh = false) {
     .then((responseJson) => {
         if (refresh) {
             setLiveOrNot(responseJson.live);
-            setProcessedVotesAndLastChange(responseJson.status);
+            setProcessedVotesAndLastChange(responseJson.vrijeme, responseJson.bmObradjenoPosto);
 
             if (loaderWrapper) loaderWrapper.style.display = 'none';
 
@@ -221,7 +221,7 @@ async function getElectionsData(refresh = false) {
         loaderWrapper = document.querySelector('.loader_wrapper');
 
         setLiveOrNot(responseJson.live);
-        setProcessedVotesAndLastChange(responseJson.status, false);
+        setProcessedVotesAndLastChange(responseJson.vrijeme, responseJson.bmObradjenoPosto, false);
         placeDataInHtml(responseJson);
 
         if (responseJson.live) {
