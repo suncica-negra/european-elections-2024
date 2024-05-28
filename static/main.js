@@ -201,7 +201,7 @@ function autoRefresh() {
 }
 
 async function getElectionsData(refresh = false) {
-    url = 'https://showcase.24sata.hr/izbori2024/eu-elections-2024_v3.json';
+    url = 'https://showcase.24sata.hr/izbori2024/eu-elections-2024.json';
 
     fetch(url).then((response) => {
         if (response.ok) {
