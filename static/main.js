@@ -61,7 +61,6 @@ function pluralizeVotes(stringVotes) {
 function placeDataInHtml(responseData) {
     document.getElementById('election_results').replaceChildren();
 
-    let tooltipHeader = 'Detalji:';
     const dataToProcess = [...responseData.lista];
 
     if (responseData['list-bez-mandata']) dataToProcess.push(...responseData['list-bez-mandata']);
@@ -137,27 +136,33 @@ function placeDataInHtml(responseData) {
             divTooltipWrapper.setAttribute('class', 'tooltip_wrapper scrollable_wrapper');
             const divTag = document.createElement('div');
             divTag.setAttribute('class', 'tooltip');
-            const tooltipP = document.createElement('p');
-            tooltipP.textContent = tooltipHeader;
-            divTag.appendChild(tooltipP);
             divTooltipWrapper.appendChild(divTag);
     
-            const tooltipOlElement = document.createElement('ul');
-            let dataForProcess = e.lista;
+            const tooltipTableElement = document.createElement('table');
+            const tableHeader = document.getElementById('tooltip_table_header');
+            const tableHeaderClone = tableHeader.content.cloneNode(true);
+            tooltipTableElement.appendChild(tableHeaderClone);
+
+            const dataForProcess = e.lista;
     
             dataForProcess?.forEach(s => {
-                const liTag = document.createElement('li');
-                liTag.textContent = `${s.naziv} - `;
+                const trElement = document.createElement('tr');
+                const tdVotesTag = document.createElement('td');
+                tdVotesTag.textContent = s.glasova;
+                trElement.appendChild(tdVotesTag);
 
-                const plurVotes = pluralizeVotes(s.glasova.toString());
+                const tdNamdeTag = document.createElement('td');
+                tdNamdeTag.textContent = s.naziv;
+                trElement.appendChild(tdNamdeTag);
 
-                const strongTag = document.createElement('strong');
-                strongTag.textContent = `${s.glasova} glas${plurVotes.toLocaleLowerCase()}`;
-                liTag.appendChild(strongTag);
-                tooltipOlElement.appendChild(liTag);
+                tooltipTableElement.appendChild(trElement);
             });
 
-            divTag.appendChild(tooltipOlElement);
+            const tableWrapper = document.createElement('div');
+            tableWrapper.setAttribute('class', 'table_wrapper');
+            tableWrapper.appendChild(tooltipTableElement);
+
+            divTag.appendChild(tableWrapper);
             wrapperDiv.appendChild(divTooltipWrapper);
         }
         // tooltip end
