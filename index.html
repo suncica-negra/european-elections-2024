@@ -15,7 +15,7 @@
             first passed through the prefixer: https://autoprefixer.github.io/
             and after that through the minifier: https://www.cleancss.com/css-minify/
         -->
-        <link rel="stylesheet" href="./static/style.min.css?bust=20240527">
+        <link rel="stylesheet" href="./static/style.min.css?bust=20240528">
     </head>
     <body class="cro_elections">
         <div class="info_wrapper scrollable_wrapper">
@@ -31,7 +31,7 @@
                 <div id="processed_votes_and_last_change"></div>
                 <p class="desk api">PODATKE OSIGURAVA: APIS IT D.O.O.</p>
             </div>
-            <div class="details scrollable_wrapper">
+            <div class="details scrollable_wrapper scrollbox">
                 <div id="election_results"></div>
             </div>
         </div>
@@ -51,11 +51,18 @@
             passed through the minifier: https://www.digitalocean.com/community/tools/minify
             with default options included.
         -->
-        <script src="./static/main.min.js?bust=20240528-1"></script>
+        <script src="./static/main.min.js?bust=20240528-2"></script>
     </body>
 
     <template id="processed_votes_and_last_change_template">
         <p id="processed_votes"> OBRAĐENIH BM</p>
         <p id="last_change">POSLJEDNJA IZMJENA: </p>
+    </template>
+
+    <template id="tooltip_table_header">
+        <tr>
+            <th>GLASOVI</th>
+            <th>IME PREZIME</th>
+        </tr>
     </template>
 </html>
