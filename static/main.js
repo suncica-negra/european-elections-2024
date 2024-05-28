@@ -201,7 +201,14 @@ function autoRefresh() {
 }
 
 async function getElectionsData(refresh = false) {
-    url = 'https://showcase.24sata.hr/izbori2024/eu-elections-2024.json';
+    urlBase = 'https://showcase.24sata.hr/izbori2024/';
+
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+    const queryParam = params.json;
+    const urlVariable = queryParam ? queryParam : 'eu-elections-2024.json';
+    url = `${urlBase}${urlVariable}`;
 
     fetch(url).then((response) => {
         if (response.ok) {
