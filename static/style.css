@@ -386,8 +386,8 @@ h1 .text span:nth-child(2) {
 .details {
     display: flex;
     flex-direction: column;
-    max-height: 190px;
-    padding-top: 0;
+    max-height: 195px;
+    padding: 0 0 5px;
     overflow-x: auto;
     overflow-y: hidden;
     margin-top: 40px;
@@ -405,15 +405,9 @@ h1 .text span:nth-child(2) {
     height: 165px;
 }
 
-.tooltip ul {
-    height: 116px;
-    overflow-x: auto;
-    padding-left: 0;
-    list-style-position: inside;
-}
-
-.tooltip ul li {
-    text-align: start;
+.tooltip .table_wrapper {
+    height: 140px;
+    overflow: auto;
 }
 
 .tooltip::after {
@@ -438,6 +432,30 @@ h1 .text span:nth-child(2) {
     left: 201px;
     border-color: transparent transparent transparent var(--whiteDefault);
     top: 150px;
+}
+
+.tooltip td,
+.tooltip th {
+    padding: 2px 5px;
+    border-bottom: 1px solid rgba(0, 36, 127, 0.1);
+}
+
+.tooltip tr:last-child td {
+    border: none;
+}
+
+.tooltip td:nth-child(1),
+.tooltip th:nth-child(1) {
+    text-align-last: end;
+    align-content: baseline;
+}
+
+.tooltip td:nth-child(2) {
+    text-align: left;
+}
+
+.tooltip tr:nth-child(1) th {
+    padding-bottom: 10px;
 }
 
 .hide_after::after {
@@ -496,6 +514,19 @@ h1 .text span:nth-child(2) {
     top: 19px;
 }
 
+.scrollbox {
+    background-image: linear-gradient(to right, #F3F8FF, #F3F8FF),
+        linear-gradient(to right, #F3F8FF, #F3F8FF),
+        linear-gradient(to right, rgba(0, 36, 127, 0.15), rgba(255,255,255,0)),
+        linear-gradient(to left, rgba(0, 36, 127, 0.15), rgba(255,255,255,0));
+
+    background-position: left center, right center, left center, right center;
+    background-repeat: no-repeat;
+    background-color: #F3F8FF;
+    background-size: 20px 100%, 20px 100%, 22px 100%, 22px 100%;
+    background-attachment: local, local, scroll, scroll;
+}
+
 @media screen and (min-width: 900px) {
     .mobile {
         display: none;
@@ -540,6 +571,7 @@ h1 .text span:nth-child(2) {
         margin: -190px 0 0 231px;
         max-height: 190px;
         overflow: unset;
+        padding: 0;
     }
 
     .details div:nth-child(1) {
@@ -548,10 +580,6 @@ h1 .text span:nth-child(2) {
 
     .details div.tooltip {
         height: 176px;
-    }
-
-    .tooltip ul {
-        height: 127px;
     }
 
     #election_results {
@@ -576,5 +604,9 @@ h1 .text span:nth-child(2) {
 
     .tooltip_wrapper {
         top: -2px;
+    }
+
+    .tooltip .table_wrapper {
+        height: 150px;
     }
 }
