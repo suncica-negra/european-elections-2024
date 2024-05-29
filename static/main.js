@@ -26,20 +26,18 @@ function fixTooltipPosition() {
     allTooltips?.forEach(e => {
         if (isSafari) e.classList.add('after_safari');
 
-        if (!isMob) {
-            const tooltipPosition = e.getBoundingClientRect();
+        const tooltipPosition = e.getBoundingClientRect();
 
-            if (tooltipPosition && ((tooltipPosition.x + tooltipPosition.width) > window.innerWidth)) {
-                const parent = e.parentNode;
-                if (parent) {
-                    parent.style.left = 'unset';
-                    parent.style.right = '90%';
-                    parent.style.setProperty('--tooltipPadding', '10px 20px 10px 5px');
-                }
-                e.classList.add('hide_after','display_before');
-
-                if (isSafari) e.classList.add('hide_after','display_before_safari');
+        if (tooltipPosition && ((tooltipPosition.x + tooltipPosition.width) > window.innerWidth)) {
+            const parent = e.parentNode;
+            if (parent) {
+                parent.style.left = 'unset';
+                parent.style.right = '90%';
+                parent.style.setProperty('--tooltipPadding', '10px 20px 10px 5px');
             }
+            e.classList.add('hide_after','display_before');
+
+            if (isSafari) e.classList.add('hide_after','display_before_safari');
         }
     });
 }
@@ -159,7 +157,7 @@ function placeDataInHtml(responseData) {
             });
 
             const tableWrapper = document.createElement('div');
-            tableWrapper.setAttribute('class', 'table_wrapper');
+            tableWrapper.setAttribute('class', 'table_wrapper vertical_scrollbox');
             tableWrapper.appendChild(tooltipTableElement);
 
             divTag.appendChild(tableWrapper);
