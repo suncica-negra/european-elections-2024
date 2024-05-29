@@ -22,8 +22,11 @@ function fixTooltipPosition() {
     if (isSafari) document.documentElement.style.setProperty('--textShadow', '0 0 1.3px #090909');
 
     const allTooltips = document.querySelectorAll('.tooltip_wrapper .tooltip');
+    let tooltipsToProcess = allTooltips;
 
-    allTooltips?.forEach(e => {
+    if (isMob) tooltipsToProcess = Array.from(allTooltips).filter((_, i) => i > 1);
+
+    tooltipsToProcess?.forEach(e => {
         if (isSafari) e.classList.add('after_safari');
 
         const tooltipPosition = e.getBoundingClientRect();
@@ -32,11 +35,11 @@ function fixTooltipPosition() {
             const parent = e.parentNode;
             if (parent) {
                 parent.style.left = 'unset';
-                parent.style.right = '90%';
+                parent.style.right = isMob ? '80%' : '90%';
                 parent.style.setProperty('--tooltipPadding', '10px 20px 10px 5px');
             }
             e.classList.add('hide_after','display_before');
-
+            
             if (isSafari) e.classList.add('hide_after','display_before_safari');
         }
     });
@@ -48,8 +51,10 @@ function percentToPixel(percent) {
     return ((percent / 100) * (max - min)) + min;
 }
 
-function pluralizeVotes(stringVotes) {
-    if (!stringVotes) return '';
+function pluralizeVotes(votes) {
+    if (!votes) return '';
+
+    const stringVotes = votes.toString();
 
     if (stringVotes.endsWith('1') && !stringVotes.endsWith('11')) return '';
     else if (['2', '3', '4'].some(num => stringVotes.endsWith(num))) return 'A';
@@ -57,7 +62,8 @@ function pluralizeVotes(stringVotes) {
 }
 
 function placeDataInHtml(responseData) {
-    document.getElementById('election_results').replaceChildren();
+    const resultsElement = document.getElementById('election_results');
+    resultsElement.replaceChildren();
 
     const dataToProcess = [...responseData.lista];
 
@@ -73,6 +79,13 @@ function placeDataInHtml(responseData) {
     maxVotes = Math.max(...allVotes);
 
     const fragment = new DocumentFragment();
+
+    if (isMob) {
+        const emptyElement = document.createElement('div');
+        emptyElement.setAttribute('class', 'first_empty');
+
+        fragment.appendChild(emptyElement);
+    }
 
     dataToProcess?.forEach(e => {
         const config = e.config;
@@ -93,15 +106,15 @@ function placeDataInHtml(responseData) {
         mandateElement.appendChild(mandateSpanElement);
 
         const votesElement = document.createElement('span');
-        const stringVotes = e.glasova.toString();
-        const pluralized = pluralizeVotes(stringVotes);
-        votesElement.textContent = `${stringVotes.replace(/\B(?=(\d{3})+(?!\d))/g, '.')} GLAS${pluralized}`;
+        const votes = e.glasova;
+        const pluralized = pluralizeVotes(votes);
+        votesElement.textContent = `${Number(votes).toLocaleString('hr-HR')} GLAS${pluralized}`;
 
         mandateElement.appendChild(votesElement);
 
         // graph start
         const graphicalRepresentation = document.createElement('div');
-        let percent = (e.glasova/maxVotes)*100;
+        let percent = ((Number(votes))/maxVotes)*100;
         if (percent < 1) percent = 1;
         const howManyPixels = percentToPixel(percent);
 
@@ -146,7 +159,7 @@ function placeDataInHtml(responseData) {
             dataForProcess?.forEach(s => {
                 const trElement = document.createElement('tr');
                 const tdVotesTag = document.createElement('td');
-                tdVotesTag.textContent = s.glasova;
+                tdVotesTag.textContent = Number(s.glasova).toLocaleString('hr-HR');
                 trElement.appendChild(tdVotesTag);
 
                 const tdNamdeTag = document.createElement('td');
@@ -168,7 +181,13 @@ function placeDataInHtml(responseData) {
         fragment.appendChild(wrapperDiv);
     });
 
-    const resultsElement = document.getElementById('election_results');
+    if (isMob) {
+        const emptyElement = document.createElement('div');
+        emptyElement.setAttribute('class', 'last_empty');
+
+        fragment.appendChild(emptyElement);
+    }
+
     resultsElement.appendChild(fragment);
 
     fixTooltipPosition();
@@ -206,10 +225,7 @@ function autoRefresh() {
 async function getElectionsData(refresh = false) {
     urlBase = 'https://showcase.24sata.hr/izbori2024/';
 
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-        get: (searchParams, prop) => searchParams.get(prop),
-    });
-    const queryParam = params.json;
+    const queryParam = (new URLSearchParams(window.location.search)).get('json');
     const urlVariable = queryParam ? queryParam : 'eu-elections-2024.json';
     url = `${urlBase}${urlVariable}`;
 
