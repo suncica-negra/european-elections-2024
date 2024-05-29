@@ -174,10 +174,13 @@ span {
     grid-template-rows: auto 374px;
     height: 366px;
     position: relative;
-    padding: var(--sixteen) var(--twentyFour);
     overflow: hidden;
     grid-gap: 0;
     grid-template-columns: unset;
+}
+
+.general_info {
+    padding: var(--sixteen) var(--twentyFour);
 }
 
 .cro_elections h1,
@@ -185,7 +188,7 @@ span {
     display: flex;
 }
 
-#election_results > div {
+#election_results .party_result_wrapper {
     flex: 1 1 0px;
     width: 0;
     max-width: 400px;
@@ -391,7 +394,6 @@ h1 .text span:nth-child(2) {
     overflow-x: auto;
     overflow-y: hidden;
     margin-top: 40px;
-    border-radius: 10px;
 }
 
 .tooltip {
@@ -483,6 +485,7 @@ h1 .text span:nth-child(2) {
     position: absolute;
     top: 0;
     display: block;
+    z-index: 3;
 }
 
 .loader {
@@ -515,17 +518,31 @@ h1 .text span:nth-child(2) {
     top: 19px;
 }
 
-.horizontal_scrollbox {
-    background-image: linear-gradient(to right, #F3F8FF, #F3F8FF),
-        linear-gradient(to right, #F3F8FF, #F3F8FF),
-        linear-gradient(to right, rgba(0, 36, 127, 0.1), rgba(255,255,255,0)),
-        linear-gradient(to left, rgba(0, 36, 127, 0.1), rgba(255,255,255,0));
+.left_shadow,
+.right_shadow {
+    position: absolute;
+    top: 80px;
+    width: var(--twentyFour);
+    height: 235px;
+    z-index: 2;
+}
 
-    background-position: left center, right center, left center, right center;
-    background-repeat: no-repeat;
-    background-color: #F3F8FF;
-    background-size: 20px 100%, 20px 100%, 22px 100%, 22px 100%;
-    background-attachment: local, local, scroll, scroll;
+.left_shadow {
+    left: 0;
+    background-image: linear-gradient(to left, transparent 0%, #F3F8FF 70%);
+}
+
+.right_shadow {
+    right: 0;
+    background-image: linear-gradient(to right, transparent 0%, #F3F8FF 70%);
+}
+
+.first_empty {
+    min-width: 0;
+}
+
+.last_empty {
+    min-width: 1px;
 }
 
 .vertical_scrollbox {
@@ -533,7 +550,6 @@ h1 .text span:nth-child(2) {
         linear-gradient(rgba(255, 255, 255, 0), white 70%) center bottom,
         radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) center top,
         radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) center bottom;
-
     background-repeat: no-repeat;
     background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
     background-attachment: local, local, scroll, scroll;
@@ -550,6 +566,11 @@ h1 .text span:nth-child(2) {
 
     .info_wrapper {
         height: 250px;
+        padding: var(--sixteen) var(--twentyFour);
+    }
+
+    .general_info {
+        padding: 0;
     }
 
     .eu_flag {
@@ -596,9 +617,10 @@ h1 .text span:nth-child(2) {
 
     #election_results {
         gap: 2%;
+        min-width: unset;
     }
 
-    #election_results > div {
+    #election_results .party_result_wrapper {
         min-width: unset;
     }
 
