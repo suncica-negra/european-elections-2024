@@ -417,7 +417,7 @@ h1 .text span:nth-child(2) {
     content: "";
     position: absolute;
     top: 150px;
-    right: var(--hundredPercent);
+    right: 201px;
     margin-top: -58px;
     border-width: var(--thirteen);
     border-style: solid;
