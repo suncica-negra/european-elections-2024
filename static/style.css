@@ -211,12 +211,14 @@ span {
 
 .live div:nth-child(2) {
     font-weight: var(--boldFont);
-    font-size: var(--sixteen);
+    font-size: var(--thirteen);
+    width: min-content;
+    line-height: 13px;
 }
 
 .cro_elections {
     min-height: auto;
-    min-width: 385px;
+    min-width: 300px;
     background-color: #F3F8FF;
     font-family: "Roboto Condensed", sans-serif;
     font-optical-sizing: auto;
@@ -300,14 +302,14 @@ h1 .text span:nth-child(2) {
 
 .live_blob {
     position: absolute;
-    top: 325px;
+    top: 323px;
     left: 15px;
 }
 
 .blob {
     background: #E01F3D;
     border-radius: var(--fiftyPercent);
-    margin: var(--ten);
+    margin: 0 10px 10px;
     height: var(--thirteen);
     width: var(--thirteen);
     box-shadow: 0 0 0 0 rgba(224, 31, 61, 1);
@@ -553,6 +555,22 @@ h1 .text span:nth-child(2) {
     background-repeat: no-repeat;
     background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
     background-attachment: local, local, scroll, scroll;
+}
+
+@media screen and (min-width: 370px) {
+    .live div:nth-child(2) {
+        font-size: var(--sixteen);
+        width: unset;
+        line-height: unset;
+    }
+
+    .live_blob {
+        top: 325px;
+    }
+
+    .blob {
+        margin: var(--ten);
+    }
 }
 
 @media screen and (min-width: 900px) {
